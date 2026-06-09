@@ -15,8 +15,8 @@ provider "azurerm" {
   subscription_id = "84dd7c9c-ad3c-4682-abd1-5403bd6ffa0d"
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = "testrg0012"
+resource "azurerm_resource_group" "rggroup" {
+  name     = "gauravjirg"
   location = "Central India"
 }
 
