@@ -1,8 +1,11 @@
+
 terraform {
+  required_version = ">= 1.10.0"
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.57.0"
+      version = "~> 4.0"
     }
   }
 }
@@ -10,10 +13,10 @@ terraform {
 provider "azurerm" {
   features {}
   subscription_id = "84dd7c9c-ad3c-4682-abd1-5403bd6ffa0d"
-  # Configuration options
 }
 
-resource "azurerm_resource_group" "gauravs" {
-  name     = "gauravss"
-  location = "East US"
+resource "azurerm_resource_group" "rg" {
+  name     = "testrg001"
+  location = "Central India"
 }
+
