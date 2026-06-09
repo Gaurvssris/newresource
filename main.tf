@@ -16,7 +16,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "testrg001"
+  name     = "testrg0012"
   location = "Central India"
 }
 
