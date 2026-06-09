@@ -1,7 +1,24 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# # Starter pipeline
+# # Start with a minimal pipeline that you can customize to build and deploy your code.
+# # Add steps that build, run tests, deploy, and more:
+# # https://aka.ms/yaml
+
+# trigger:
+# - main
+
+# pool:
+#   name: dockeragent
+
+# steps:
+# - task: TerraformTask@5
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'init'
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/Resource/newresource/'
+#     backendServiceArm: 'automation'
+#     backendAzureRmStorageAccountName: 'gauravbackupstorage'
+#     backendAzureRmContainerName: 'tfstate'
+#     backendAzureRmKey: 'backup.tfstate'
 
 trigger:
 - main
@@ -10,12 +27,30 @@ pool:
   name: dockeragent
 
 steps:
+
+- checkout: self
+
+- task: PowerShell@2
+  displayName: 'Show Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host "Source Directory = $(Build.SourcesDirectory)"
+      Get-ChildItem "$(Build.SourcesDirectory)" -Recurse
+
+- task: TerraformInstaller@1
+  displayName: 'Install Terraform'
+  inputs:
+    terraformVersion: '1.10.5'
+
 - task: TerraformTask@5
+  displayName: 'Terraform Init'
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource/newresource/'
+    workingDirectory: '$(Build.SourcesDirectory)\resource\newresource'
     backendServiceArm: 'automation'
     backendAzureRmStorageAccountName: 'gauravbackupstorage'
     backendAzureRmContainerName: 'tfstate'
     backendAzureRmKey: 'backup.tfstate'
+
